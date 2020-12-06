@@ -120,13 +120,6 @@ dependencies {
     //multidex
     implementation 'androidx.multidex:multidex:2.0.1'
 
-    //database
-    implementation 'com.google.firebase:firebase-firestore:21.5.0'
-//
-////    Google sheets
-    implementation 'com.google.apis:google-api-services-sheets:v4-rev516-1.23.0'
-    implementation 'com.google.api-client:google-api-client-android:1.23.0'
-
     // GSON json conversion
     implementation 'com.google.code.gson:gson:2.8.6'
 

@@ -45,7 +45,7 @@ class OrderAdapter(context: Context) : BaseAdapter() {
         var found = false
         for (existingItem in orderList) {
             if(addItem.malaylamName == existingItem.menuItem.malaylamName && existingItem.comment == "") {
-                existingItem.quantity++
+                existingItem.increment(weight)
                 println("increasing! ${existingItem.quantity}")
                 found = true
                 break
@@ -54,8 +54,6 @@ class OrderAdapter(context: Context) : BaseAdapter() {
         if(!found) {
             orderList.add(RegularOrderItem(addItem, quantity = weight))
         }
-//        else
-//            orderList[0].increment()
         updateAll()
     }
 
@@ -89,7 +87,7 @@ class OrderAdapter(context: Context) : BaseAdapter() {
                 println("increasing amount of bla bla")
                 val position = tag as Int
 
-                orderList[position] = orderList[position].increment()
+                orderList[position].increment()
                 notifyDataSetChanged()
                 orderChanged()
             }

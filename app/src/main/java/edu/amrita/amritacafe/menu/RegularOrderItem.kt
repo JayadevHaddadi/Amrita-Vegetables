@@ -1,5 +1,7 @@
 package edu.amrita.amritacafe.menu
 
+import java.math.RoundingMode
+import java.text.DecimalFormat
 import java.util.*
 
 data class RegularOrderItem(
@@ -9,14 +11,6 @@ data class RegularOrderItem(
     var priceMultiplier: Float = 1f,
     val id: UUID = UUID.randomUUID()
 ) {
-
-    init {
-
-    }
-
-    val discount: Float by lazy {
-        if (priceMultiplier < 1f && priceMultiplier > -1f) (originalPrice * priceMultiplier) else 0f
-    }
 
     val refund: Float by lazy {
         if (priceMultiplier == -1f) (originalPrice * priceMultiplier) else 0f
@@ -31,6 +25,11 @@ data class RegularOrderItem(
     }
 
     fun editComment(newComment: String) = copy(comment = newComment)
-    fun increment() = copy(quantity = quantity + 1)
+    fun increment(weight: Float = 1f) {
+        val df = DecimalFormat("#.##")
+        df.roundingMode = RoundingMode.HALF_UP
+
+        quantity = df.format(quantity + weight).toFloat()
+    }
 }
 

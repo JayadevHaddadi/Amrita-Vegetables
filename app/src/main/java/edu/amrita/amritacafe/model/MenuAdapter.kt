@@ -39,7 +39,7 @@ class MenuAdapter(
         }.let { menuByCategory ->
             val colors: TypedArray = context.resources.obtainTypedArray(R.array.colors)
             colorMap = menuByCategory.keys.mapIndexed { idx, cat ->
-                cat to colors.getColor(idx + 3, 0)
+                cat to colors.getColor(idx, 0)
             }.toMap()
 
             colors.recycle()

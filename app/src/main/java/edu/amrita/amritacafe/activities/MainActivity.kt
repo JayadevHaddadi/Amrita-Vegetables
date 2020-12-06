@@ -125,10 +125,8 @@ class MainActivity : AppCompatActivity() {
 
         order_button.setOnClickListener {
             val order = Order(currentOrderNumber, orderAdapter.orderItems.toList())
-            val orders = listOf(order)
 
             openPaymentDialog()
-
         }
 
         val latestMenu = loadLastMenu(pref)
