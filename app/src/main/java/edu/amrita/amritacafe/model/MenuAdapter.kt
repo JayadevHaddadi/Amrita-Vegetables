@@ -19,19 +19,12 @@ import kotlinx.android.synthetic.main.item_menu.view.*
 class MenuAdapter(
     menu: List<MenuItemUS>,
     private val context: Context,
-    showFullName: Boolean,
     private val onChanged: () -> Unit
 ) : BaseAdapter() {
-
-    var showFullName: Boolean = showFullName
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
-
     private var menuItems: List<Any>
     private var colorMap: Map<String, Int>
-    private var menuItemDisplayNameHandler: (MenuItemUS) -> String = { menuItemUS -> menuItemUS.englishName  }
+    private var menuItemDisplayNameHandler: (MenuItemUS) -> String =
+        { menuItemUS -> menuItemUS.englishName }
 
     init {
         menu.groupBy {
@@ -92,10 +85,7 @@ class MenuAdapter(
                     val lighten = color.lighten
                     (background as GradientDrawable).setStroke(3, color)
                     (background as GradientDrawable).setColor(lighten)
-                    if (showFullName)
-                        english_name.text = menuItem.malaylamName
-                    else
-                        english_name.text = menuItem.englishName
+                    english_name.text = menuItem.englishName
 //                    english_name.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
                     malayalam_name.text = menuItem.malaylamName;
                     english_name.setTypeface(SERIF, NORMAL)

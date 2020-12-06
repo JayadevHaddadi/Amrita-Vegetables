@@ -138,7 +138,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setMenuAdapter(menu: List<MenuItemUS>) {
         menuAdapter =
-            MenuAdapter(menu, applicationContext, configuration.showMenuItemNames) {
+            MenuAdapter(menu, applicationContext) {
                 runOnUiThread { menuAdapter.notifyDataSetChanged() }
             }
         runOnUiThread { menuGridView.adapter = menuAdapter }
@@ -213,11 +213,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun setAmritapuriMode() {
         modeAmritapuri = true
-        order_button.text = "Order"
-        user_TV.text = "Amritapuri @ $tabletName"
-
-        println("Time: ${Calendar.getInstance().get(Calendar.HOUR_OF_DAY)}")
-        configuration.isBreakfastTime = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) < 11
+        order_button.text = getString(R.string.order_string)
+        user_TV.text = getString(R.string.amritapuri_at) + tabletName
 
         createDefualtFilesIfNecessary()
         loadAmritapuriMenu() //will load on resume

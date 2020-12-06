@@ -27,16 +27,6 @@ class HistoryAdapter(val orders: MutableList<Order>) :
             }
             view.history_order_TV.text = orderText.toString()
 
-//            view.kitchen_progress.visibility = View.INVISIBLE
-//            view.image_kitchen_error.visibility = View.INVISIBLE
-//            view.image_kitchen_done.visibility = View.INVISIBLE
-//            view.kitchen_retry_button.visibility = View.VISIBLE
-//
-//            view.receipt_progress.visibility = View.INVISIBLE
-//            view.image_receipt_error.visibility = View.INVISIBLE
-//            view.image_receipt_done.visibility = View.INVISIBLE
-//            view.receipt_retry_button.visibility = View.VISIBLE
-
             view.history_item_sum_TV.text = order.sum.toString()
         }
     }
