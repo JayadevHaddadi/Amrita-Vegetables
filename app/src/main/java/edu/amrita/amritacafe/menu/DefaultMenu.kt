@@ -1,6 +1,19 @@
 package edu.amrita.amritacafe.menu
 
 val DEFAULT_BREAKFAST_MENU: List<MenuItemUS> = listOf(
+    MenuItemUS("Amara", "Amara", 65f, "Vegtables"),
+    MenuItemUS("Sweet Corn", "Swe Corn", 70f, "Vegtables"),
+    MenuItemUS("Red radish", "Red RAD", 75f, "Vegtables"),
+    MenuItemUS("Broccoli", "Broccoli", 180f, "Vegtables"),
+    MenuItemUS("green Zucchini", "GRE Zuc ", 180f, "Vegtables"),
+    MenuItemUS("Yellow Zucchini", "YEL ZUC", 180f, "Vegtables"),
+    MenuItemUS("Capsicum Red", "Cap RED", 170f, "Vegtables"),
+    MenuItemUS("Capsicum Yellow", "Cap YEL ", 170f, "Vegtables"),
+    MenuItemUS("Celery", "Celery", 170f, "Vegtables"),
+    MenuItemUS("Red cabbage", "Red CAB", 80f, "Vegtables"),
+    MenuItemUS("Mushrooms", "MUCH", 80f, "Vegtables"),
+    MenuItemUS("Leeks", "Leeks", 150f, "Vegtables"),
+
     MenuItemUS("ഇഞ്ചി", "Ginger", 50f, "Vegtables"),
     MenuItemUS("ഏത്തക്കായ", "Raw Banana", 50f, "Vegtables"),
     MenuItemUS("തക്കാളി", " Tomato", 27f, "Vegtables"),

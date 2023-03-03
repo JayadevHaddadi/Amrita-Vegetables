@@ -77,8 +77,9 @@ class MenuAdapter(
                     (background as GradientDrawable).setStroke(2, color)
                     (background as GradientDrawable).setColor(color)
                     english_name.setTypeface(SANS_SERIF, NORMAL)
-//                    english_name.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22f)
                     english_name.text = menuItem
+                    malayalam_name.text = ""
+                    cost.text = ""
                 }
                 is MenuItemUS -> {
                     val color = colorMap.getValue(menuItem.category)
@@ -86,7 +87,6 @@ class MenuAdapter(
                     (background as GradientDrawable).setStroke(3, color)
                     (background as GradientDrawable).setColor(lighten)
                     english_name.text = menuItem.englishName
-//                    english_name.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
                     malayalam_name.text = menuItem.malaylamName;
                     english_name.setTypeface(SERIF, NORMAL)
                     cost.text = menuItem.price.toString()
@@ -95,6 +95,8 @@ class MenuAdapter(
                     (background as GradientDrawable).setStroke(0, Color.TRANSPARENT)
                     (background as GradientDrawable).setColor(Color.TRANSPARENT)
                     english_name.text = ""
+                    malayalam_name.text = ""
+                    cost.text = ""
                 }
 
             }

@@ -1,59 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/amma_mysore_small"
-        tools:context=".activities.MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/amma_mysore_small"
+    tools:context=".activities.MainActivity">
 
     <LinearLayout
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginRight="4dp"
-            android:background="@drawable/background_white_text"
-            android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="4dp"
+        android:background="@drawable/background_white_text"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/amma_font"
+                android:text="Amrita Cafe"
+                android:textColor="@color/black"
+                android:textSize="50sp" />
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal">
-
-            <TextView
-                    android:layout_width="220dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/amma_font"
-                    android:text="Amrita Cafe"
-                    android:textColor="@color/black"
-                    android:textSize="50sp" />
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/versionName"
-                    android:textColor="@color/black"
-                    android:textSize="12sp"
-                    android:textStyle="italic" />
+                android:text="@string/versionName"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="italic" />
 
         </LinearLayout>
 
         <TextView
-                android:id="@+id/user_TV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="2dp"
-                android:text="Jayadev @ Amma"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toStartOf="@+id/menuGridView"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/title" />
+            android:id="@+id/user_TV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="2dp"
+            android:text="Jayadev @ Amma"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/menuGridView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title" />
 
     </LinearLayout>
 
@@ -75,24 +75,25 @@
     <!--            app:layout_constraintTop_toBottomOf="@+id/title" />-->
 
     <GridView
-            android:id="@+id/menuGridView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="1dp"
-            android:clipToPadding="false"
-            android:gravity="center_horizontal|center_vertical"
-            android:horizontalSpacing="4dp"
-            android:numColumns="@integer/columns"
-            android:paddingTop="4dp"
-            android:verticalSpacing="4dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            tools:listitem="@layout/item_menu">
+        android:id="@+id/menuGridView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="1dp"
+        android:clipToPadding="false"
+        android:gravity="center_horizontal|center_vertical"
+        android:horizontalSpacing="4dp"
+        android:numColumns="@integer/columns"
+        android:paddingTop="4dp"
+        android:paddingBottom="100dp"
+        android:verticalSpacing="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:listitem="@layout/item_menu">
 
     </GridView>
 
@@ -142,87 +143,87 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
-            android:id="@+id/guideline"
-            android:layout_width="1dp"
-            android:layout_height="0dp"
-            android:layout_marginLeft="360dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="@+id/menuGridView"
+        android:id="@+id/guideline"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="360dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/menuGridView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/background_white_text"
+        app:layout_constraintBottom_toTopOf="@+id/order_button"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sum"
+            android:textColor="@color/black"
+            android:textSize="26sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout2"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/total_cost_TV"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginLeft="4dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginRight="4dp"
-            android:layout_marginBottom="4dp"
-            android:background="@drawable/background_white_text"
-            app:layout_constraintBottom_toTopOf="@+id/order_button"
-            app:layout_constraintEnd_toStartOf="@+id/guideline"
-            app:layout_constraintStart_toStartOf="parent">
-
-        <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sum"
-                android:textColor="@color/black"
-                android:textSize="26sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-                android:id="@+id/total_cost_TV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textColor="@color/black"
-                android:textSize="26sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            android:text="0"
+            android:textColor="@color/black"
+            android:textSize="26sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ListView
-            android:id="@+id/order_ListView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginLeft="4dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginRight="4dp"
-            android:layout_marginBottom="4dp"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="4dp"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
-            app:layout_constraintEnd_toStartOf="@+id/menuGridView"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-            app:layout_constraintVertical_bias="0.0"
-            tools:listitem="@layout/item_order" />
+        android:id="@+id/order_ListView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="4dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
+        app:layout_constraintEnd_toStartOf="@+id/menuGridView"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:layout_constraintVertical_bias="0.0"
+        tools:listitem="@layout/item_order" />
 
 
     <Button
-            android:id="@+id/order_button"
-            android:layout_width="0dp"
-            android:layout_height="70dp"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
-            android:layout_marginBottom="4dp"
-            android:background="@drawable/background_payment"
-            android:text="Order"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/history_button"
-            app:layout_constraintEnd_toStartOf="@+id/menuGridView"
-            app:layout_constraintStart_toStartOf="parent" />
+        android:id="@+id/order_button"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/background_payment"
+        android:text="Order"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/history_button"
+        app:layout_constraintEnd_toStartOf="@+id/menuGridView"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/history_button"
