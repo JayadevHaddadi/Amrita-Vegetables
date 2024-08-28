@@ -51,62 +51,27 @@
             android:text="Jayadev @ Amma"
             android:textColor="@color/black"
             android:textSize="16sp"
-            app:layout_constraintEnd_toStartOf="@+id/menuGridView"
+            app:layout_constraintEnd_toStartOf="@+id/menuRecyclerView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title" />
 
     </LinearLayout>
 
-    <!--    <TextView-->
-    <!--            android:id="@+id/user_TV"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_marginStart="4dp"-->
-    <!--            android:layout_marginLeft="4dp"-->
-    <!--            android:layout_marginTop="2dp"-->
-    <!--            android:layout_marginEnd="4dp"-->
-    <!--            android:layout_marginRight="4dp"-->
-    <!--            android:background="@drawable/background_white_text"-->
-    <!--            android:text="Jayadev @ Amma"-->
-    <!--            android:textColor="@color/black"-->
-    <!--            android:textSize="20sp"-->
-    <!--            app:layout_constraintEnd_toStartOf="@+id/menuGridView"-->
-    <!--            app:layout_constraintStart_toStartOf="parent"-->
-    <!--            app:layout_constraintTop_toBottomOf="@+id/title" />-->
-
-    <GridView
-        android:id="@+id/menuGridView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/menuRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginLeft="4dp"
         android:layout_marginRight="1dp"
         android:clipToPadding="false"
-        android:gravity="center_horizontal|center_vertical"
-        android:horizontalSpacing="4dp"
-        android:numColumns="@integer/columns"
         android:paddingTop="4dp"
-        android:paddingBottom="100dp"
-        android:verticalSpacing="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        tools:listitem="@layout/item_menu">
-
-    </GridView>
-
-    <!--    <ImageButton-->
-    <!--            android:id="@+id/button_cancel"-->
-    <!--            android:layout_marginLeft="4dp"-->
-    <!--            android:layout_width="68dp"-->
-    <!--            android:layout_height="79dp"-->
-    <!--            android:background="#C2C2C2"-->
-    <!--            app:layout_constraintBottom_toBottomOf="@+id/order_button"-->
-    <!--            app:layout_constraintStart_toStartOf="parent"-->
-    <!--            app:layout_constraintTop_toTopOf="@+id/order_button"-->
-    <!--            app:srcCompat="@drawable/ic_delete_forever_black_24dp" />-->
+        tools:listitem="@layout/item_menu" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -114,7 +79,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
         android:background="@drawable/background_white_text"
-        app:layout_constraintEnd_toStartOf="@+id/menuGridView"
+        app:layout_constraintEnd_toStartOf="@+id/menuRecyclerView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title">
 
@@ -148,7 +113,7 @@
         android:layout_height="0dp"
         android:layout_marginLeft="360dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/menuGridView"
+        app:layout_constraintBottom_toBottomOf="@+id/menuRecyclerView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -200,13 +165,12 @@
         android:divider="@android:color/transparent"
         android:dividerHeight="4dp"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
-        app:layout_constraintEnd_toStartOf="@+id/menuGridView"
+        app:layout_constraintEnd_toStartOf="@+id/menuRecyclerView"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
         app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/item_order" />
-
 
     <Button
         android:id="@+id/order_button"
@@ -222,7 +186,7 @@
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/history_button"
-        app:layout_constraintEnd_toStartOf="@+id/menuGridView"
+        app:layout_constraintEnd_toStartOf="@+id/menuRecyclerView"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -239,7 +203,7 @@
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/menuGridView"
+        app:layout_constraintEnd_toStartOf="@+id/menuRecyclerView"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -255,6 +219,6 @@
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/title"
-        app:layout_constraintEnd_toStartOf="@+id/menuGridView" />
+        app:layout_constraintEnd_toStartOf="@+id/menuRecyclerView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

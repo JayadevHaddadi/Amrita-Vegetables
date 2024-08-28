@@ -5,16 +5,15 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.net.ConnectivityManager
 import android.os.Bundle
-import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
-import android.widget.AdapterView
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import edu.amrita.amritacafe.BuildConfig
 import edu.amrita.amritacafe.R
@@ -41,7 +40,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var sheetsMenu: ArrayList<MenuItemUS>
     private var myToast: Toast? = null
-    private lateinit var tabletName: String
     private var modeAmritapuri: Boolean = false
     private lateinit var currentHistoryFile: File
     private var dialogOpen = false
@@ -71,18 +69,6 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-        val androidId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
-        println("Unique device: $androidId")
-        tabletName = when (androidId) {
-            "f6ec19ab2b07a2f2" -> "Siva"
-            "cb41899147fbbee7" -> "Amma"
-            "3ebd272118138401" -> "Kali"
-            "9dc83032a79a71a8" -> "Krishna"
-            "c001d62ed3579582" -> "Shani"
-            else -> androidId
-        }
-        binding.userTV.text = "$tabletName"
-
         orderAdapter = OrderAdapter(this)
         orderAdapter.orderChanged = {
             currentOrderSum = orderAdapter.orderItems.map { it.finalPrice }.sum()
@@ -96,35 +82,67 @@ class MainActivity : AppCompatActivity() {
             openPaymentDialog()
         }
 
-        binding.menuGridView.onItemClickListener = AdapterView.OnItemClickListener { _, view, _, _ ->
-            when (val menuItem = view.tag) {
-                is MenuItemUS -> {
-                    val (dialog, root) = LayoutInflater.from(this).inflate(R.layout.dialog_enter_weight, null)
-                        .let { view ->
-                            AlertDialog.Builder(this)
-                                .setView(view)
-                                .setCancelable(true)
-                                .show()
-                                .to(view)
-                        }
-
-                    val enterWeightBinding = DialogEnterWeightBinding.bind(root)
-                    enterWeightBinding.amritapuriButton.setOnClickListener {
-                        try {
-                            val toFloat = enterWeightBinding.weightET.text.toString().toFloat()
-                            orderAdapter.add(menuItem, toFloat)
-                            dialog.dismiss()
-                        } catch (e: Exception) {
-                            // Handle the exception
-                        }
-                    }
-                }
-            }
+        // Initialize menuAdapter with an empty list first
+        menuAdapter = MenuAdapter(emptyList(), applicationContext) { menuItem ->
+            println("PRESSED2")
+            openEnterWeightDialog(menuItem)
         }
+
+        // Setup RecyclerView with GridLayoutManager and the initialized MenuAdapter
+        val columns = resources.getInteger(R.integer.columns)
+        binding.menuRecyclerView.layoutManager = GridLayoutManager(this, columns)
+        binding.menuRecyclerView.adapter = menuAdapter
 
         println("STARTED?")
         setAmritapuriMode()
     }
+
+    private fun openEnterWeightDialog(menuItem: Any?) {
+        println("PRESSED " + menuItem)
+        when (menuItem) {
+            is MenuItemUS -> {
+                val (dialog, root) = LayoutInflater.from(this).inflate(R.layout.dialog_enter_weight, null)
+                    .let { view ->
+                        AlertDialog.Builder(this)
+                            .setView(view)
+                            .setCancelable(true)
+                            .show()
+                            .to(view)
+                    }
+
+                val enterWeightBinding = DialogEnterWeightBinding.bind(root)
+                enterWeightBinding.amritapuriButton.setOnClickListener {
+                    try {
+                        val toFloat = enterWeightBinding.weightET.text.toString().toFloat()
+                        orderAdapter.add(menuItem, toFloat)
+                        dialog.dismiss()
+                    } catch (e: Exception) {
+                        // Handle the exception
+                    }
+                }
+            }
+        }
+//        val (dialog, root) = LayoutInflater.from(this).inflate(R.layout.dialog_enter_weight, null)
+//            .let { view ->
+//                AlertDialog.Builder(this)
+//                    .setView(view)
+//                    .setCancelable(true)
+//                    .show()
+//                    .to(view)
+//            }
+//
+//        val enterWeightBinding = DialogEnterWeightBinding.bind(root)
+//        enterWeightBinding.amritapuriButton.setOnClickListener {
+//            try {
+//                val toFloat = enterWeightBinding.weightET.text.toString().toFloat()
+//                orderAdapter.add(menuItem, toFloat)
+//                dialog.dismiss()
+//            } catch (e: Exception) {
+//                // Handle the exception
+//            }
+//        }
+    }
+
 
     private val orderHistory = mutableListOf<Order>()
 
@@ -133,10 +151,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setMenuAdapter(menu: List<MenuItemUS>) {
-        menuAdapter = MenuAdapter(menu, applicationContext) {
-            runOnUiThread { menuAdapter.notifyDataSetChanged() }
+        // Update the menuAdapter with the new menu items
+        menuAdapter = MenuAdapter(menu, applicationContext) { menuItem ->
+            println("PRESSED2")
+            openEnterWeightDialog(menuItem)
         }
-        runOnUiThread { binding.menuGridView.adapter = menuAdapter }
+//        menuAdapter = MenuAdapter(menu, applicationContext) {
+//            runOnUiThread { menuAdapter.notifyDataSetChanged() }
+//        }
+        runOnUiThread { binding.menuRecyclerView.adapter = menuAdapter }
     }
 
     private fun makeToast(text: String) {
@@ -210,7 +233,6 @@ class MainActivity : AppCompatActivity() {
     private fun setAmritapuriMode() {
         modeAmritapuri = true
         binding.orderButton.text = getString(R.string.order_string)
-        binding.userTV.text = getString(R.string.amritapuri_at) + tabletName
 
         createDefualtFilesIfNecessary()
         loadAmritapuriMenu() // will load on resume
