@@ -10,8 +10,8 @@ android {
     defaultConfig {
         multiDexEnabled true
         applicationId "edu.amrita.amritacafe.vegetables"
-        minSdkVersion 19
-        targetSdkVersion 22
+        minSdkVersion 16
+        targetSdkVersion 34
         versionCode 1
         versionName "v2.8"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
