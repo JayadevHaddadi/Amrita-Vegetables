@@ -1,20 +1,20 @@
 package edu.amrita.amritacafe.activities
 
-import android.view.View
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import edu.amrita.amritacafe.R
+import edu.amrita.amritacafe.databinding.ItemHistoryBinding
 import edu.amrita.amritacafe.model.Order
-import kotlinx.android.synthetic.main.item_history.view.*
 
-class HistoryAdapter(val orders: MutableList<Order>) :
+class HistoryAdapter(private val orders: MutableList<Order>) :
     RecyclerView.Adapter<HistoryAdapter.HistoryHolder>() {
-    inner class HistoryHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(order: Order) {
-            view.history_time_TV.text = order.orderTime
-            view.history_order_nr_TV.text = order.orderNumber.toString()
 
-            val orderText = StringBuffer()
+    inner class HistoryHolder(private val binding: ItemHistoryBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(order: Order) {
+            binding.historyTimeTV.text = order.orderTime
+            binding.historyOrderNrTV.text = order.orderNumber.toString()
+
+            val orderText = StringBuilder()
             println("size: ${order.orderItems.size}")
             for (item in order.orderItems) {
                 println("order: ${item.menuItem.malaylamName}")
@@ -25,16 +25,16 @@ class HistoryAdapter(val orders: MutableList<Order>) :
                             else "\n * ${item.comment}\n"
                 )
             }
-            view.history_order_TV.text = orderText.toString()
+            binding.historyOrderTV.text = orderText.toString()
 
-            view.history_item_sum_TV.text = order.sum.toString()
+            binding.historyItemSumTV.text = order.sum.toString()
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryHolder {
         println("creating new holder")
-        val inflatedView = parent.inflate(R.layout.item_history, false)
-        return HistoryHolder(inflatedView)
+        val binding = ItemHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return HistoryHolder(binding)
     }
 
     override fun getItemCount() = orders.size
@@ -44,5 +44,4 @@ class HistoryAdapter(val orders: MutableList<Order>) :
         val item = orders[position]
         holder.bind(item)
     }
-
 }

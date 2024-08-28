@@ -1,10 +1,8 @@
 package edu.amrita.amritacafe.model
 
-
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Color
-import android.graphics.Typeface.*
 import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.View
@@ -13,8 +11,8 @@ import android.widget.BaseAdapter
 import androidx.annotation.ColorInt
 import androidx.core.graphics.ColorUtils
 import edu.amrita.amritacafe.R
+import edu.amrita.amritacafe.databinding.ItemMenuBinding
 import edu.amrita.amritacafe.menu.MenuItemUS
-import kotlinx.android.synthetic.main.item_menu.view.*
 
 class MenuAdapter(
     menu: List<MenuItemUS>,
@@ -64,46 +62,53 @@ class MenuAdapter(
         @ColorInt
         get() = ColorUtils.blendARGB(this, Color.WHITE, 0.3f)
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View =
-        convertOrInflate(convertView, parent).apply {
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        val binding = if (convertView == null) {
+            ItemMenuBinding.inflate(LayoutInflater.from(context), parent, false)
+        } else {
+            ItemMenuBinding.bind(convertView)
+        }
 
-            val menuItem = menuItems[position]
+        val menuItem = menuItems[position]
+        binding.root.tag = menuItem
 
-            tag = menuItem
-
-            when (menuItem) {
-                is String -> {
-                    val color = colorMap.getValue(menuItem)
-                    (background as GradientDrawable).setStroke(2, color)
-                    (background as GradientDrawable).setColor(color)
-                    english_name.setTypeface(SANS_SERIF, NORMAL)
-                    english_name.text = menuItem
-                    malayalam_name.text = ""
-                    cost.text = ""
+        when (menuItem) {
+            is String -> {
+                // Ensure proper view reset for category headers
+                (binding.root.background as GradientDrawable).apply {
+                    setStroke(2, colorMap.getValue(menuItem))
+                    setColor(colorMap.getValue(menuItem))
                 }
-                is MenuItemUS -> {
-                    val color = colorMap.getValue(menuItem.category)
-                    val lighten = color.lighten
-                    (background as GradientDrawable).setStroke(3, color)
-                    (background as GradientDrawable).setColor(lighten)
-                    english_name.text = menuItem.englishName
-                    malayalam_name.text = menuItem.malaylamName;
-                    english_name.setTypeface(SERIF, NORMAL)
-                    cost.text = menuItem.price.toString()
+                binding.englishName.setTypeface(null, android.graphics.Typeface.NORMAL)
+                binding.englishName.text = menuItem
+                binding.malayalamName.text = ""
+                binding.cost.text = ""
+            }
+            is MenuItemUS -> {
+                // Ensure proper view reset for menu items
+                val color = colorMap.getValue(menuItem.category)
+                val lighten = color.lighten
+                (binding.root.background as GradientDrawable).apply {
+                    setStroke(3, color)
+                    setColor(lighten)
                 }
-                is Unit -> {
-                    (background as GradientDrawable).setStroke(0, Color.TRANSPARENT)
-                    (background as GradientDrawable).setColor(Color.TRANSPARENT)
-                    english_name.text = ""
-                    malayalam_name.text = ""
-                    cost.text = ""
+                binding.englishName.text = menuItem.englishName
+                binding.malayalamName.text = menuItem.malaylamName
+                binding.englishName.setTypeface(android.graphics.Typeface.SERIF, android.graphics.Typeface.NORMAL)
+                binding.cost.text = menuItem.price.toString()
+            }
+            is Unit -> {
+                // Reset for empty spaces
+                (binding.root.background as GradientDrawable).apply {
+                    setStroke(0, Color.TRANSPARENT)
+                    setColor(Color.TRANSPARENT)
                 }
-
+                binding.englishName.text = ""
+                binding.malayalamName.text = ""
+                binding.cost.text = ""
             }
         }
 
-    private fun convertOrInflate(view: View?, parent: ViewGroup) =
-        view ?: context.getSystemService(Context.LAYOUT_INFLATER_SERVICE).let {
-            (it as LayoutInflater).inflate(R.layout.item_menu, parent, false)
-        }
+        return binding.root
+    }
 }

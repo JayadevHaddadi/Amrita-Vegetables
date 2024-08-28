@@ -18,6 +18,10 @@ import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import edu.amrita.amritacafe.BuildConfig
 import edu.amrita.amritacafe.R
+import edu.amrita.amritacafe.databinding.ActivityMainBinding
+import edu.amrita.amritacafe.databinding.DialogEnterWeightBinding
+import edu.amrita.amritacafe.databinding.DialogHistoryBinding
+import edu.amrita.amritacafe.databinding.DialogPaymentBinding
 import edu.amrita.amritacafe.menu.BREAKFAST_FILE
 import edu.amrita.amritacafe.menu.MenuItemUS
 import edu.amrita.amritacafe.menu.createDefualtFilesIfNecessary
@@ -26,19 +30,15 @@ import edu.amrita.amritacafe.model.MenuAdapter
 import edu.amrita.amritacafe.model.Order
 import edu.amrita.amritacafe.model.OrderAdapter
 import edu.amrita.amritacafe.settings.Configuration
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.dialog_history.view.*
-import kotlinx.android.synthetic.main.dialog_login.view.*
-import kotlinx.android.synthetic.main.dialog_payment.view.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.File
-import java.util.*
 
 fun String.capitalizeWords(): String =
-    split(" ").map { it.toLowerCase().capitalize() }.joinToString(" ")
+    split(" ").map { it.lowercase().replaceFirstChar { it.uppercase() } }.joinToString(" ")
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
     private lateinit var sheetsMenu: ArrayList<MenuItemUS>
     private var myToast: Toast? = null
     private lateinit var tabletName: String
@@ -58,7 +58,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
@@ -66,15 +67,11 @@ class MainActivity : AppCompatActivity() {
         println("Build flavor: ${BuildConfig.FLAVOR}, is amritapuri: $modeAmritapuri")
 
         val pref = PreferenceManager.getDefaultSharedPreferences(this)
-        pref.let { preferences ->
-            configuration = Configuration(preferences)
-        }
+        configuration = Configuration(pref)
 
         supportActionBar?.hide()
 
-//        Security.insertProviderAt(Conscrypt.newProvider(), 1)
-        val androidId =
-            Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
+        val androidId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
         println("Unique device: $androidId")
         tabletName = when (androidId) {
             "f6ec19ab2b07a2f2" -> "Siva"
@@ -84,41 +81,41 @@ class MainActivity : AppCompatActivity() {
             "c001d62ed3579582" -> "Shani"
             else -> androidId
         }
-        user_TV.text = "$tabletName"
+        binding.userTV.text = "$tabletName"
 
         orderAdapter = OrderAdapter(this)
         orderAdapter.orderChanged = {
             currentOrderSum = orderAdapter.orderItems.map { it.finalPrice }.sum()
-            total_cost_TV.text = currentOrderSum.toString()
+            binding.totalCostTV.text = currentOrderSum.toString()
         }
 
-        order_ListView.adapter = orderAdapter
+        binding.orderListView.adapter = orderAdapter
 
-        order_button.setOnClickListener {
+        binding.orderButton.setOnClickListener {
             val order = Order(currentOrderNumber, orderAdapter.orderItems.toList())
-
             openPaymentDialog()
         }
 
-        menuGridView.onItemClickListener = AdapterView.OnItemClickListener { _, view, _, _ ->
+        binding.menuGridView.onItemClickListener = AdapterView.OnItemClickListener { _, view, _, _ ->
             when (val menuItem = view.tag) {
                 is MenuItemUS -> {
-                    val (dialog, root) =
-                        LayoutInflater.from(this).inflate(R.layout.dialog_enter_weight, null)
-                            .let { view ->
-                                AlertDialog.Builder(this)
-                                    .setView(view)
-                                    .setCancelable(true)
-                                    .show()
-                                    .to(view)
-                            }
+                    val (dialog, root) = LayoutInflater.from(this).inflate(R.layout.dialog_enter_weight, null)
+                        .let { view ->
+                            AlertDialog.Builder(this)
+                                .setView(view)
+                                .setCancelable(true)
+                                .show()
+                                .to(view)
+                        }
 
-                    root.amritapuri_button.setOnClickListener {
+                    val enterWeightBinding = DialogEnterWeightBinding.bind(root)
+                    enterWeightBinding.amritapuriButton.setOnClickListener {
                         try {
-                            val toFloat = root.weight_ET.text.toString().toFloat()
+                            val toFloat = enterWeightBinding.weightET.text.toString().toFloat()
                             orderAdapter.add(menuItem, toFloat)
                             dialog.dismiss()
                         } catch (e: Exception) {
+                            // Handle the exception
                         }
                     }
                 }
@@ -126,7 +123,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         println("STARTED?")
-
         setAmritapuriMode()
     }
 
@@ -137,11 +133,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setMenuAdapter(menu: List<MenuItemUS>) {
-        menuAdapter =
-            MenuAdapter(menu, applicationContext) {
-                runOnUiThread { menuAdapter.notifyDataSetChanged() }
-            }
-        runOnUiThread { menuGridView.adapter = menuAdapter }
+        menuAdapter = MenuAdapter(menu, applicationContext) {
+            runOnUiThread { menuAdapter.notifyDataSetChanged() }
+        }
+        runOnUiThread { binding.menuGridView.adapter = menuAdapter }
     }
 
     private fun makeToast(text: String) {
@@ -151,8 +146,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openPaymentDialog() {
-        val (dialog, root) =
-            LayoutInflater.from(this).inflate(R.layout.dialog_payment, null).let { view ->
+        val (dialog, root) = LayoutInflater.from(this).inflate(R.layout.dialog_payment, null)
+            .let { view ->
                 AlertDialog.Builder(this)
                     .setView(view)
                     .setCancelable(true)
@@ -160,20 +155,20 @@ class MainActivity : AppCompatActivity() {
                     .to(view)
             }
 
-        root.cash_received_button.setOnClickListener {
-//            finishOrder(true)
+        val paymentBinding = DialogPaymentBinding.bind(root)
+        paymentBinding.cashReceivedButton.setOnClickListener {
             startNewOrder()
             dialog.dismiss()
         }
-        root.credit_received_button.setOnClickListener {
-//            finishOrder(false)
+        paymentBinding.creditReceivedButton.setOnClickListener {
             dialog.dismiss()
         }
 
         received = 0f
         currentTotalCost = orderAdapter.orderItems.map { it.finalPrice }.sum()
-        root.to_pay_TV.text = currentTotalCost.toString()
-        val onClickRecivedListener = View.OnClickListener { billButton ->
+        paymentBinding.toPayTV.text = currentTotalCost.toString()
+
+        val onClickReceivedListener = View.OnClickListener { billButton ->
             billButton as Button
             when (billButton.text) {
                 "500₹" -> received += 500
@@ -186,18 +181,19 @@ class MainActivity : AppCompatActivity() {
                 "1₹" -> received += 1f
                 "clear" -> received = 0f
             }
-            root.received_TV.text = received.toString()
-            root.to_return_TV.text = (received - currentTotalCost).toString()
+            paymentBinding.receivedTV.text = received.toString()
+            paymentBinding.toReturnTV.text = (received - currentTotalCost).toString()
         }
-        root.received_100_button.setOnClickListener(onClickRecivedListener)
-        root.received_50_button.setOnClickListener(onClickRecivedListener)
-        root.received_20_button.setOnClickListener(onClickRecivedListener)
-        root.received_10_button.setOnClickListener(onClickRecivedListener)
-        root.received_5_button.setOnClickListener(onClickRecivedListener)
-        root.received_1_button.setOnClickListener(onClickRecivedListener)
-        root.received_25cent_button.setOnClickListener(onClickRecivedListener)
-        root.clear_received_button.setOnClickListener(onClickRecivedListener)
-        root.credit_received_button.setOnClickListener(onClickRecivedListener)
+
+        paymentBinding.received100Button.setOnClickListener(onClickReceivedListener)
+        paymentBinding.received50Button.setOnClickListener(onClickReceivedListener)
+        paymentBinding.received20Button.setOnClickListener(onClickReceivedListener)
+        paymentBinding.received10Button.setOnClickListener(onClickReceivedListener)
+        paymentBinding.received5Button.setOnClickListener(onClickReceivedListener)
+        paymentBinding.received1Button.setOnClickListener(onClickReceivedListener)
+        paymentBinding.received25centButton.setOnClickListener(onClickReceivedListener)
+        paymentBinding.clearReceivedButton.setOnClickListener(onClickReceivedListener)
+        paymentBinding.creditReceivedButton.setOnClickListener(onClickReceivedListener)
     }
 
     override fun onResume() {
@@ -213,15 +209,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun setAmritapuriMode() {
         modeAmritapuri = true
-        order_button.text = getString(R.string.order_string)
-        user_TV.text = getString(R.string.amritapuri_at) + tabletName
+        binding.orderButton.text = getString(R.string.order_string)
+        binding.userTV.text = getString(R.string.amritapuri_at) + tabletName
 
         createDefualtFilesIfNecessary()
-        loadAmritapuriMenu() //will load on resume
-
-//        startNewOrder()
+        loadAmritapuriMenu() // will load on resume
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         println("dialog open: $dialogOpen")
         if (!dialogOpen) {
@@ -229,10 +224,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     private fun isOnline(): Boolean {
-        val cm =
-            getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+        val cm = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
         val netInfo = cm.activeNetworkInfo
         return netInfo != null && netInfo.isConnectedOrConnecting
     }
@@ -247,7 +240,7 @@ class MainActivity : AppCompatActivity() {
 
             runOnUiThread {
                 orderAdapter.clear()
-                order_number_TV.text = currentOrderNumber.toString()
+                binding.orderNumberTV.text = currentOrderNumber.toString()
             }
         }
     }
@@ -262,7 +255,6 @@ class MainActivity : AppCompatActivity() {
             AlertDialog.Builder(this)
                 .setView(view)
                 .setCancelable(true)
-//                .setIcon(R.drawable.ic_print_black_24dp)
                 .show()
                 .apply {
                     setCanceledOnTouchOutside(false)
@@ -276,8 +268,8 @@ class MainActivity : AppCompatActivity() {
 
     fun openHistoryDialog(historyButton: View) {
         makeToast("So many old orders: ${orderHistory.size}")
-        val (dialog, root) =
-            LayoutInflater.from(this).inflate(R.layout.dialog_history, null).let { view ->
+        val (dialog, root) = LayoutInflater.from(this).inflate(R.layout.dialog_history, null)
+            .let { view ->
                 AlertDialog.Builder(this)
                     .setView(view)
                     .setCancelable(true)
@@ -285,8 +277,9 @@ class MainActivity : AppCompatActivity() {
                     .to(view)
             }
 
-        root.history_RV.layoutManager = LinearLayoutManager(this)
+        val historyBinding = DialogHistoryBinding.bind(root)
+        historyBinding.historyRV.layoutManager = LinearLayoutManager(this)
         val historyAdapter = HistoryAdapter(orderHistory)
-        root.history_RV.adapter = historyAdapter
+        historyBinding.historyRV.adapter = historyAdapter
     }
 }

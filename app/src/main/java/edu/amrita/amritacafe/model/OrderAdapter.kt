@@ -8,11 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.BaseAdapter
-import edu.amrita.amritacafe.R
+import edu.amrita.amritacafe.databinding.ItemOrderBinding
 import edu.amrita.amritacafe.menu.MenuItemUS
 import edu.amrita.amritacafe.menu.RegularOrderItem
-import kotlinx.android.synthetic.main.item_order.view.*
-
 
 class OrderAdapter(context: Context) : BaseAdapter() {
 
@@ -79,58 +77,58 @@ class OrderAdapter(context: Context) : BaseAdapter() {
         orderChanged()
     }
 
-    private fun reuseOrInflate(view: View?, parent: ViewGroup) =
-        view ?: inflater.inflate(R.layout.item_order, parent, false).apply {
+    private fun reuseOrInflate(view: View?, parent: ViewGroup): ItemOrderBinding =
+        if (view == null) {
+            ItemOrderBinding.inflate(inflater, parent, false)
+        } else {
+            ItemOrderBinding.bind(view)
+        }
 
-            val orderItemView = this
-            amount_TV.setOnClickListener {
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        val binding = reuseOrInflate(convertView, parent)
+        binding.root.tag = position
+
+        orderList[position].let { orderItem ->
+            binding.label.text = orderItem.menuItem.englishName
+            binding.amountTV.text = orderItem.quantity.toString()
+            binding.priceTV.text = orderItem.finalPrice.toString()
+            binding.commentET.setText(orderItem.comment)
+            binding.commentET.visibility =
+                if (orderItem.comment.isNotBlank()) View.VISIBLE
+                else View.GONE
+
+            binding.amountTV.setOnClickListener {
                 println("increasing amount of bla bla")
-                val position = tag as Int
-
                 orderList[position].increment()
                 notifyDataSetChanged()
                 orderChanged()
             }
 
-            setOnClickListener {
-                comment_ET.run {
+            binding.root.setOnClickListener {
+                binding.commentET.run {
                     visibility = View.VISIBLE
                     requestFocus()
-                    context.getSystemService(Context.INPUT_METHOD_SERVICE).also {
+                    context.getSystemService(Context.INPUT_METHOD_SERVICE)?.let {
                         (it as InputMethodManager).showSoftInput(this, 0)
                     }
                 }
             }
 
-            cancel_button.setOnClickListener {
-                remove(orderList[tag as Int])
+            binding.cancelButton.setOnClickListener {
+                remove(orderList[position])
             }
 
-            comment_ET.addTextChangedListener(object : TextWatcher {
+            binding.commentET.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(p0: Editable?) {}
 
                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                    val position = orderItemView.tag as Int
                     orderList[position] = orderItems[position].editComment(p0.toString())
                 }
             })
         }
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        return reuseOrInflate(convertView, parent).apply {
-            tag = position
-
-            orderList[position].let { orderItem ->
-                label.text = orderItem.menuItem.englishName
-                amount_TV.text = orderItem.quantity.toString()
-                price_TV.text = orderItem.finalPrice.toString()
-                comment_ET.setText(orderItem.comment)
-                comment_ET.visibility =
-                    if (orderItem.comment.isNotBlank()) View.VISIBLE
-                    else View.GONE
-            }
-        }
+        return binding.root
     }
 }
