@@ -21,7 +21,6 @@ import edu.amrita.amritacafe.databinding.ActivityMainBinding
 import edu.amrita.amritacafe.databinding.DialogEnterWeightBinding
 import edu.amrita.amritacafe.databinding.DialogHistoryBinding
 import edu.amrita.amritacafe.databinding.DialogPaymentBinding
-import edu.amrita.amritacafe.menu.BREAKFAST_FILE
 import edu.amrita.amritacafe.menu.MenuItemUS
 import edu.amrita.amritacafe.menu.createDefualtFilesIfNecessary
 import edu.amrita.amritacafe.menu.getListOfMenu
@@ -51,6 +50,8 @@ class MainActivity : AppCompatActivity() {
     private var currentOrderSum = 0f
     var received = 0f
     var currentTotalCost = 0f
+
+    private lateinit var BREAKFAST_FILE : File //breakfast file moved here.
 
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,13 +83,11 @@ class MainActivity : AppCompatActivity() {
             openPaymentDialog()
         }
 
-        // Initialize menuAdapter with an empty list first
         menuAdapter = MenuAdapter(emptyList(), applicationContext) { menuItem ->
             println("PRESSED2")
             openEnterWeightDialog(menuItem)
         }
 
-        // Setup RecyclerView with GridLayoutManager and the initialized MenuAdapter
         val columns = resources.getInteger(R.integer.columns)
         binding.menuRecyclerView.layoutManager = GridLayoutManager(this, columns)
         binding.menuRecyclerView.adapter = menuAdapter
@@ -225,8 +224,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun loadAmritapuriMenu() {
-        val file = BREAKFAST_FILE
-        val list = getListOfMenu(file)
+        val list = getListOfMenu(BREAKFAST_FILE) //call the function with the file.
         setMenuAdapter(list)
     }
 
@@ -234,7 +232,11 @@ class MainActivity : AppCompatActivity() {
         modeAmritapuri = true
         binding.orderButton.text = getString(R.string.order_string)
 
-        createDefualtFilesIfNecessary()
+        createDefualtFilesIfNecessary(this)
+
+        val dir = File(filesDir, "Menus")
+        BREAKFAST_FILE = File(dir, "Breakfast.txt") //initialize the file after context is available.
+
         loadAmritapuriMenu() // will load on resume
     }
 

@@ -6,19 +6,19 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
-import edu.amrita.amritacafe.R
 import edu.amrita.amritacafe.databinding.ActivitySettingsBinding
-import edu.amrita.amritacafe.menu.BREAKFAST_FILE
 import edu.amrita.amritacafe.menu.saveIfValidText
 import edu.amrita.amritacafe.settings.Configuration
 import edu.amrita.amritacafe.settings.Configuration.Companion.COLUMN_NUMBER_RANGE
 import java.io.BufferedReader
+import java.io.File
 import java.io.FileReader
 
 class SettingsActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySettingsBinding
     private lateinit var pref: SharedPreferences
     private lateinit var configuration: Configuration
+    private lateinit var BREAKFAST_FILE : File
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +32,9 @@ class SettingsActivity : AppCompatActivity() {
 
         val column = pref.getString(COLUMN_NUMBER_RANGE, "10")
         binding.columnNumbersET.setText(column)
+
+        val dir = File(filesDir, "Menus")
+        BREAKFAST_FILE = File(dir, "Breakfast.txt")
 
         fun loadCurrentMenu() {
             val file = BREAKFAST_FILE
