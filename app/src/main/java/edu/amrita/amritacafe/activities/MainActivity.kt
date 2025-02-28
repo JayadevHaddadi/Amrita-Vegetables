@@ -1,6 +1,7 @@
 package edu.amrita.amritacafe.activities
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.net.ConnectivityManager
@@ -8,6 +9,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -110,6 +112,30 @@ class MainActivity : AppCompatActivity() {
                     }
 
                 val enterWeightBinding = DialogEnterWeightBinding.bind(root)
+                val weightEditText = enterWeightBinding.weightET
+
+                // Request focus and show keyboard
+                weightEditText.requestFocus()
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.showSoftInput(weightEditText, InputMethodManager.SHOW_IMPLICIT)
+
+                // Handle "Enter" key
+                weightEditText.setOnEditorActionListener { _, actionId, _ ->
+                    if (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_DONE) {
+                        try {
+                            val toFloat = weightEditText.text.toString().toFloat()
+                            orderAdapter.add(menuItem, toFloat)
+                            dialog.dismiss()
+                        } catch (e: Exception) {
+                            // Handle the exception
+                        }
+                        true // Consume the event
+                    } else {
+                        false // Let other listeners handle the event
+                    }
+                }
+
+                //Handle the amritapuri button.
                 enterWeightBinding.amritapuriButton.setOnClickListener {
                     try {
                         val toFloat = enterWeightBinding.weightET.text.toString().toFloat()
@@ -121,27 +147,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-//        val (dialog, root) = LayoutInflater.from(this).inflate(R.layout.dialog_enter_weight, null)
-//            .let { view ->
-//                AlertDialog.Builder(this)
-//                    .setView(view)
-//                    .setCancelable(true)
-//                    .show()
-//                    .to(view)
-//            }
-//
-//        val enterWeightBinding = DialogEnterWeightBinding.bind(root)
-//        enterWeightBinding.amritapuriButton.setOnClickListener {
-//            try {
-//                val toFloat = enterWeightBinding.weightET.text.toString().toFloat()
-//                orderAdapter.add(menuItem, toFloat)
-//                dialog.dismiss()
-//            } catch (e: Exception) {
-//                // Handle the exception
-//            }
-//        }
     }
-
 
     private val orderHistory = mutableListOf<Order>()
 
