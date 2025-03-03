@@ -13,12 +13,15 @@ import edu.amrita.amritacafe.settings.Configuration.Companion.COLUMN_NUMBER_RANG
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader
+import edu.amrita.amritacafe.menu.DEFAULT_BREAKFAST_MENU
+import edu.amrita.amritacafe.menu.createMenuFileFromMenuList
+import androidx.appcompat.app.AlertDialog
 
 class SettingsActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySettingsBinding
     private lateinit var pref: SharedPreferences
     private lateinit var configuration: Configuration
-    private lateinit var BREAKFAST_FILE : File
+    private lateinit var BREAKFAST_FILE: File
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +45,10 @@ class SettingsActivity : AppCompatActivity() {
             binding.menuET.setText(br.readText())
         }
         loadCurrentMenu()
+
+        binding.resetButton.setOnClickListener {
+            showResetConfirmationDialog()
+        }
     }
 
     fun saveSettings(view: View) {
@@ -52,6 +59,29 @@ class SettingsActivity : AppCompatActivity() {
             applicationContext,
             response,
             Toast.LENGTH_LONG
+        ).show()
+    }
+    private fun showResetConfirmationDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Confirm Reset")
+        builder.setMessage("Are you sure you want to reset the menu to the default?")
+        builder.setPositiveButton("Reset") { dialog, which ->
+            resetMenu()
+        }
+        builder.setNegativeButton("Cancel") { dialog, which ->
+            // Do nothing, just close the dialog
+        }
+        builder.show()
+    }
+
+    private fun resetMenu() {
+        // Overwrite the current menu file with the default data
+        createMenuFileFromMenuList(BREAKFAST_FILE, DEFAULT_BREAKFAST_MENU)
+
+        Toast.makeText(
+            applicationContext,
+            "Menu reset to default",
+            Toast.LENGTH_SHORT
         ).show()
     }
 }

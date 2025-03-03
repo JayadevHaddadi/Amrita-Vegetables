@@ -15,15 +15,13 @@ fun createDefualtFilesIfNecessary(context: Context) {
     }
 
     val BREAKFAST_FILE = File(dir, "Breakfast.txt")
-    val LUNCH_DINNER_FILE = File(dir, "LunchDinner.txt")
 
     if (!BREAKFAST_FILE.isFile) {
         createMenuFileFromMenuList(BREAKFAST_FILE, DEFAULT_BREAKFAST_MENU)
-        createMenuFileFromMenuList(LUNCH_DINNER_FILE, DEFAULT_LUNCH_DINNER_MENU)
     }
 }
 
-private fun createMenuFileFromMenuList(file: File, list: List<MenuItemUS>) {
+fun createMenuFileFromMenuList(file: File, list: List<MenuItemUS>) {
     file.createNewFile()
     val fos = FileOutputStream(file, false)
     var category = ""
