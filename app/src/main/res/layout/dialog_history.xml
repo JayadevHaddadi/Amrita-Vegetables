@@ -3,13 +3,13 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tool="http://schemas.android.com/tools"
         android:background="@drawable/background_login_buttons"
-        android:layout_width="400dp"
-        android:layout_height="1000dp">
+        android:layout_width="@dimen/dialog_history_width"
+        android:layout_height="@dimen/dialog_history_height">
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/history_RV"
-            android:layout_width="400dp"
-            android:layout_height="600dp"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dialog_history_rv_height"
             android:layout_marginStart="1dp"
             android:layout_marginLeft="1dp"
             android:layout_marginEnd="1dp"
@@ -26,8 +26,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="History"
+            android:textColor="@color/white"
             android:textColorHint="@color/white"
-            android:textSize="40sp"
+            android:textSize="@dimen/dialog_title_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

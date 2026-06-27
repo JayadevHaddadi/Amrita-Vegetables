@@ -25,12 +25,12 @@
             android:layout_gravity="center_horizontal">
 
             <TextView
-                android:layout_width="220dp"
+                android:layout_width="@dimen/title_layout_width"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/amma_font"
                 android:text="Amrita Vegtables"
                 android:textColor="@color/black"
-                android:textSize="40sp" />
+                android:textSize="@dimen/title_text_size" />
 
             <TextView
                 android:visibility="gone"
@@ -52,7 +52,7 @@
             android:text="@string/versionName"
 
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="@dimen/version_text_size"
             app:layout_constraintEnd_toStartOf="@+id/menuRecyclerView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title" />
@@ -91,7 +91,7 @@
             android:layout_height="wrap_content"
             android:text="Order"
             android:textColor="@color/black"
-            android:textSize="26sp"
+            android:textSize="@dimen/header_text_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -102,7 +102,7 @@
             android:layout_height="wrap_content"
             android:text="1"
             android:textColor="@color/black"
-            android:textSize="26sp"
+            android:textSize="@dimen/header_text_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -113,7 +113,7 @@
         android:id="@+id/guideline"
         android:layout_width="1dp"
         android:layout_height="0dp"
-        android:layout_marginLeft="360dp"
+        android:layout_marginLeft="@dimen/guideline_position"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@+id/menuRecyclerView"
         app:layout_constraintStart_toStartOf="parent"
@@ -139,7 +139,7 @@
             android:layout_height="wrap_content"
             android:text="Sum"
             android:textColor="@color/black"
-            android:textSize="26sp"
+            android:textSize="@dimen/header_text_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -150,7 +150,7 @@
             android:layout_height="wrap_content"
             android:text="0"
             android:textColor="@color/black"
-            android:textSize="26sp"
+            android:textSize="@dimen/header_text_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -177,7 +177,7 @@
     <Button
         android:id="@+id/order_button"
         android:layout_width="0dp"
-        android:layout_height="70dp"
+        android:layout_height="@dimen/button_height_large"
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
         android:layout_marginBottom="4dp"
@@ -185,7 +185,7 @@
         android:text="Order"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="@dimen/button_text_size"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/history_button"
         app:layout_constraintEnd_toStartOf="@+id/menuRecyclerView"
@@ -194,7 +194,7 @@
     <Button
         android:id="@+id/history_button"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/button_height_medium"
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
         android:background="@drawable/background_other_buttons"
@@ -202,7 +202,7 @@
         android:text="Order History"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="@dimen/button_text_size"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/menuRecyclerView"
@@ -211,14 +211,14 @@
     <Button
         android:id="@+id/settings_button"
         android:layout_width="0dp"
-        android:layout_height="45dp"
+        android:layout_height="@dimen/button_height_small"
         android:layout_margin="4dp"
         android:background="@drawable/background_other_buttons"
         android:onClick="openSettings"
         android:text="Settings"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="@dimen/button_text_size"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/title"
         app:layout_constraintEnd_toStartOf="@+id/menuRecyclerView" />

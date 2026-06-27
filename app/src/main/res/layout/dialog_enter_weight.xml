@@ -8,8 +8,8 @@
 
     <ImageView
             android:id="@+id/imageView"
-            android:layout_width="1100dp"
-            android:layout_height="390dp"
+            android:layout_width="@dimen/dialog_enter_weight_img_width"
+            android:layout_height="@dimen/dialog_enter_weight_img_height"
             android:background="@drawable/background_login_buttons"
             android:padding="10dp"
             android:src="@drawable/amma_love_quote"
@@ -19,7 +19,7 @@
     <EditText
             android:id="@+id/weight_ET"
             android:layout_width="wrap_content"
-            android:layout_height="60dp"
+            android:layout_height="@dimen/button_height_large"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:textColor="@color/white"
@@ -29,19 +29,21 @@
             android:hint="enter weight"
             android:inputType="numberDecimal"
             android:paddingLeft="8dp"
+            android:textSize="@dimen/button_text_size"
             app:layout_constraintBottom_toTopOf="@+id/amritapuri_button"
             app:layout_constraintStart_toStartOf="parent" />
 
     <Button
             android:id="@+id/amritapuri_button"
-            android:layout_width="300dp"
-            android:layout_height="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height_large"
+            android:minWidth="150dp"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginBottom="8dp"
             android:background="@drawable/background_login_buttons"
             android:text="ok"
-            android:textSize="18sp"
+            android:textSize="@dimen/button_text_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

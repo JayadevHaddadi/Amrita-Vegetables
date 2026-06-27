@@ -1,18 +1,21 @@
 {
-  "version": 2,
+  "version": 3,
   "artifactType": {
     "type": "APK",
     "kind": "Directory"
   },
   "applicationId": "edu.amrita.amritacafe.vegetables",
-  "variantName": "processAmritapuriReleaseResources",
+  "variantName": "amritapuriRelease",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
+      "attributes": [],
       "versionCode": 1,
-      "versionName": "v2.8",
+      "versionName": "version 280225",
       "outputFile": "app-amritapuri-release.apk"
     }
-  ]
+  ],
+  "elementType": "File",
+  "minSdkVersionForDexing": 21
 }

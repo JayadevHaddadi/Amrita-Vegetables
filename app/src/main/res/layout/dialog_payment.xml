@@ -4,7 +4,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/background_other_buttons"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="8dp">
 
     <TextView
             android:id="@+id/textView4"
@@ -12,12 +13,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:text="Payment"
             android:textColor="@color/black"
-            android:textSize="24sp"
+            android:textSize="@dimen/dialog_title_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -25,17 +26,18 @@
     <Button
             android:id="@+id/cash_received_button"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginStart="64dp"
-            android:layout_marginLeft="64dp"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/button_height_large"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/background_other_button_darkers"
-            android:padding="16dp"
+            android:padding="8dp"
             android:text="Finished"
             android:textColor="@color/black"
-            android:textSize="20dp"
+            android:textSize="@dimen/button_text_size"
             app:layout_constraintBottom_toTopOf="@+id/view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/received_10_button"
@@ -44,7 +46,8 @@
     <Button
             android:id="@+id/credit_received_button"
             android:layout_width="0dp"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/button_height_large"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
@@ -52,7 +55,7 @@
             android:background="@drawable/background_other_button_darkers"
             android:text="clear"
             android:textColor="@color/black"
-            android:textSize="20dp"
+            android:textSize="@dimen/button_text_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/cash_received_button"
@@ -67,21 +70,20 @@
             android:layout_marginTop="16dp"
             android:text="Cash recieved:"
             android:textColor="@color/black"
-            android:textSize="20dp"
-
+            android:textSize="@dimen/payment_text_size"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view2" />
 
     <TextView
             android:id="@+id/textView13"
             android:layout_width="wrap_content"
-            android:layout_height="24dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:text="Total to pay:"
             android:textColor="@color/black"
-            android:textSize="20dp"
+            android:textSize="@dimen/payment_text_size"
             app:layout_constraintEnd_toStartOf="@+id/to_pay_TV"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
@@ -92,8 +94,7 @@
             android:layout_marginTop="16dp"
             android:text="Bills recieved:"
             android:textColor="@color/black"
-            android:textSize="20dp"
-
+            android:textSize="@dimen/payment_text_size"
             app:layout_constraintStart_toStartOf="@+id/textView5"
             app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
@@ -105,8 +106,7 @@
             android:layout_marginLeft="100dp"
             android:text="Cash to return:"
             android:textColor="@color/black"
-            android:textSize="20dp"
-
+            android:textSize="@dimen/payment_text_size"
             app:layout_constraintStart_toEndOf="@+id/received_TV"
             app:layout_constraintTop_toTopOf="@+id/received_TV" />
 
@@ -119,8 +119,7 @@
             android:text="0"
             android:textAlignment="textEnd"
             android:textColor="@color/black"
-            android:textSize="20dp"
-
+            android:textSize="@dimen/payment_text_size"
             app:layout_constraintStart_toEndOf="@+id/textView5"
             app:layout_constraintTop_toTopOf="@+id/textView5" />
 
@@ -131,8 +130,7 @@
             android:text="0"
             android:textAlignment="textEnd"
             android:textColor="@color/black"
-            android:textSize="20dp"
-
+            android:textSize="@dimen/payment_text_size"
             app:layout_constraintStart_toStartOf="@+id/received_TV"
             app:layout_constraintTop_toTopOf="@+id/textView13" />
 
@@ -144,7 +142,7 @@
             android:layout_marginLeft="8dp"
             android:text="0"
             android:textColor="@color/black"
-            android:textSize="20dp"
+            android:textSize="@dimen/payment_text_size"
             app:layout_constraintStart_toEndOf="@+id/textView6"
             app:layout_constraintTop_toTopOf="@+id/textView6" />
 
@@ -152,13 +150,15 @@
             android:id="@+id/received_100_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minWidth="60dp"
+            android:minHeight="40dp"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/background_other_button_darkers"
             android:text="500₹"
             android:textColor="@color/black"
-            android:textSize="20dp"
+            android:textSize="@dimen/button_text_size"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
@@ -166,13 +166,15 @@
             android:id="@+id/received_5_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minWidth="60dp"
+            android:minHeight="40dp"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/background_other_button_darkers"
             android:text="20₹"
             android:textColor="@color/black"
-            android:textSize="20dp"
+            android:textSize="@dimen/button_text_size"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/received_100_button" />
 
@@ -180,13 +182,15 @@
             android:id="@+id/received_1_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
+            android:minWidth="60dp"
+            android:minHeight="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/background_other_button_darkers"
             android:text="10₹"
             android:textColor="@color/black"
-            android:textSize="20dp"
+            android:textSize="@dimen/button_text_size"
             app:layout_constraintStart_toEndOf="@+id/received_5_button"
             app:layout_constraintTop_toBottomOf="@+id/received_100_button" />
 
@@ -194,13 +198,15 @@
             android:id="@+id/received_25cent_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
+            android:minWidth="60dp"
+            android:minHeight="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/background_other_button_darkers"
             android:text="5₹"
             android:textColor="@color/black"
-            android:textSize="20dp"
+            android:textSize="@dimen/button_text_size"
             app:layout_constraintStart_toEndOf="@+id/received_1_button"
             app:layout_constraintTop_toBottomOf="@+id/received_100_button" />
 
@@ -208,13 +214,15 @@
             android:id="@+id/clear_received_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
+            android:minWidth="60dp"
+            android:minHeight="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/background_other_button_darkers"
             android:text="1₹"
             android:textColor="@color/black"
-            android:textSize="20dp"
+            android:textSize="@dimen/button_text_size"
             app:layout_constraintStart_toEndOf="@+id/received_25cent_button"
             app:layout_constraintTop_toBottomOf="@+id/received_100_button" />
 
@@ -222,12 +230,14 @@
             android:id="@+id/received_50_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
+            android:minWidth="60dp"
+            android:minHeight="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:background="@drawable/background_other_button_darkers"
             android:text="200₹"
             android:textColor="@color/black"
-            android:textSize="20dp"
+            android:textSize="@dimen/button_text_size"
             app:layout_constraintStart_toEndOf="@+id/received_100_button"
             app:layout_constraintTop_toTopOf="@+id/received_100_button" />
 
@@ -235,12 +245,14 @@
             android:id="@+id/received_20_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
+            android:minWidth="60dp"
+            android:minHeight="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:background="@drawable/background_other_button_darkers"
             android:text="100₹"
             android:textColor="@color/black"
-            android:textSize="20dp"
+            android:textSize="@dimen/button_text_size"
             app:layout_constraintStart_toEndOf="@+id/received_50_button"
             app:layout_constraintTop_toTopOf="@+id/received_50_button" />
 
@@ -248,12 +260,14 @@
             android:id="@+id/received_10_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
+            android:minWidth="60dp"
+            android:minHeight="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:background="@drawable/background_other_button_darkers"
             android:text="50₹"
             android:textColor="@color/black"
-            android:textSize="20dp"
+            android:textSize="@dimen/button_text_size"
             app:layout_constraintStart_toEndOf="@+id/received_20_button"
             app:layout_constraintTop_toTopOf="@+id/received_50_button" />
 
@@ -263,8 +277,6 @@
             android:layout_height="1dp"
             android:layout_marginTop="16dp"
             android:background="@color/best_pink_very_dark"
-            android:textColor="@color/black"
-            android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/received_5_button" />
@@ -275,8 +287,6 @@
             android:layout_height="1dp"
             android:layout_marginTop="16dp"
             android:background="@color/best_pink_very_dark"
-            android:textColor="@color/black"
-            android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView13" />
