@@ -27,13 +27,13 @@ fun createMenuFileFromMenuList(file: File, list: List<MenuItemUS>) {
     var category = ""
 
     for (item in list) {
-        val nextCategory = item.category.toUpperCase()
+        val nextCategory = item.category.uppercase()
         if (category != nextCategory) {
             category = nextCategory
             fos.write("\n$category\n".toByteArray())
         }
 
-        fos.write("${item.malaylamName.capitalizeWords()}, ${item.englishName.toUpperCase()}, ${item.price.toInt()}\n".toByteArray())
+        fos.write("${item.malaylamName.capitalizeWords()}, ${item.englishName.uppercase()}, ${item.price.toInt()}\n".toByteArray())
     }
 
     fos.close()
@@ -76,13 +76,13 @@ private fun readMenuFromText(allText: String): Pair<String, List<MenuItemUS>> {
             if (columns.size == 1) {
                 if (columns[0].isEmpty())
                     continue
-                category = columns[0].toUpperCase()
+                category = columns[0].uppercase()
                 itemNr = 1
             } else
                 menu.add(
                     MenuItemUS(
                         columns[0].capitalizeWords(),
-                        columns[1].toUpperCase(),
+                        columns[1].uppercase(),
                         columns[2].toFloat(),
                         category
                     )

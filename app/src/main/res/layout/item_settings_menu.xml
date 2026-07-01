@@ -3,7 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp">
+    android:paddingStart="8dp"
+    android:paddingEnd="8dp"
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp">
 
     <EditText
         android:id="@+id/name_ET"
@@ -12,6 +15,7 @@
         android:hint="@string/settings_name_hint"
         android:importantForAutofill="no"
         android:inputType="text"
+        android:imeOptions="actionNext"
         android:textSize="@dimen/default_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/price_ET"
@@ -26,6 +30,7 @@
         android:hint="@string/settings_cost_hint"
         android:importantForAutofill="no"
         android:inputType="numberDecimal"
+        android:imeOptions="actionDone"
         android:textSize="@dimen/default_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/delete_button"

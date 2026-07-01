@@ -51,14 +51,16 @@ class SettingsActivity : AppCompatActivity() {
             menuList.clear()
             menuList.addAll(sorted)
             
-            adapter.notifyDataSetChanged()
-            saveMenuToFile(notifyAdapter = false)
-            
-            // Scroll to the new item if it's empty, or find its new position
             val newPos = menuList.indexOf(newItem)
             if (newPos != -1) {
+                adapter.focusPosition = newPos
+                adapter.notifyDataSetChanged()
                 binding.menuRecyclerView.scrollToPosition(newPos)
+            } else {
+                adapter.notifyDataSetChanged()
             }
+            
+            saveMenuToFile(notifyAdapter = false)
         }
 
         binding.resetButton.setOnClickListener {

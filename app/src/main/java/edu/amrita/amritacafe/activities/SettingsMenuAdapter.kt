@@ -1,9 +1,11 @@
 package edu.amrita.amritacafe.activities
 
+import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.amrita.amritacafe.databinding.ItemSettingsMenuBinding
 import edu.amrita.amritacafe.menu.MenuItemUS
@@ -13,6 +15,8 @@ class SettingsMenuAdapter(
     private val onChanged: () -> Unit,
     private val onDelete: (Int) -> Unit
 ) : RecyclerView.Adapter<SettingsMenuAdapter.ViewHolder>() {
+
+    var focusPosition: Int = -1
 
     inner class ViewHolder(private val binding: ItemSettingsMenuBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -70,6 +74,15 @@ class SettingsMenuAdapter(
                 if (pos != RecyclerView.NO_POSITION) {
                     onDelete(pos)
                 }
+            }
+            
+            if (adapterPosition == focusPosition) {
+                binding.nameET.post {
+                    binding.nameET.requestFocus()
+                    val imm = binding.root.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.showSoftInput(binding.nameET, InputMethodManager.SHOW_IMPLICIT)
+                }
+                focusPosition = -1
             }
         }
     }

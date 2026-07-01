@@ -106,9 +106,11 @@ class MainActivity : AppCompatActivity() {
                 val weightEditText = enterWeightBinding.weightET
 
                 // Request focus and show keyboard
-                weightEditText.requestFocus()
-                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.showSoftInput(weightEditText, InputMethodManager.SHOW_IMPLICIT)
+                weightEditText.post {
+                    weightEditText.requestFocus()
+                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.showSoftInput(weightEditText, InputMethodManager.SHOW_IMPLICIT)
+                }
 
                 // Handle "Enter" key
                 weightEditText.setOnEditorActionListener { _, actionId, _ ->
