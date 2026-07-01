@@ -23,4 +23,9 @@
     <dimen name="dialog_history_width">300dp</dimen>
     <dimen name="dialog_history_height">500dp</dimen>
     <dimen name="dialog_history_rv_height">300dp</dimen>
+
+    <!-- Settings Activity (Smartphone) -->
+    <dimen name="settings_menu_et_width">250dp</dimen>
+    <dimen name="settings_text_size_large">16sp</dimen>
+    <dimen name="settings_button_padding">8dp</dimen>
 </resources>
