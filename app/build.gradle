@@ -8,7 +8,6 @@ android {
     compileSdk 35
 
     defaultConfig {
-        multiDexEnabled true
         applicationId "edu.amrita.amritacafe.vegetables"
         minSdkVersion 21
         targetSdkVersion 34
@@ -49,8 +48,11 @@ android {
 
     buildTypes {
         release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
-            debuggable true
+            debuggable false
         }
         debug {
             signingConfig signingConfigs.release
@@ -68,12 +70,6 @@ android {
 
     kotlinOptions {
         jvmTarget = "1.8"
-//        freeCompilerArgs += "-Xjvm-default=compatibility"
-    }
-
-    configurations {
-        all*.exclude group: 'com.google.guava', module: 'listenablefuture'
-        all*.exclude module: 'guava-jdk5'
     }
 
     packagingOptions {
@@ -112,17 +108,4 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.15.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
     implementation 'androidx.preference:preference-ktx:1.2.1'
-
-    // RxJava
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.6'
-
-    // Multidex
-    implementation 'androidx.multidex:multidex:2.0.1'
-
-    // Security
-    implementation 'org.conscrypt:conscrypt-android:2.4.0'
-
-    implementation("com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava")
-    implementation("com.google.guava:guava:31.1-android")
 }

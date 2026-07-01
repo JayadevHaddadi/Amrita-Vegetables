@@ -14,7 +14,6 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import edu.amrita.amritacafe.BuildConfig
@@ -242,12 +241,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun isOnline(): Boolean {
-        val cm = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
-        val netInfo = cm.activeNetworkInfo
-        return netInfo != null && netInfo.isConnectedOrConnecting
-    }
-
     private fun startNewOrder() {
         GlobalScope.launch {
             currentOrderNumber++
@@ -265,18 +258,6 @@ class MainActivity : AppCompatActivity() {
     private fun lastItemCostMultiplier(percentCost: Float) {
         orderAdapter.lastItemCostMultiplier(percentCost)
     }
-
-    @SuppressLint("InflateParams")
-    private fun printerDialog() =
-        LayoutInflater.from(this).inflate(R.layout.dialog_print, null).let { view ->
-            AlertDialog.Builder(this)
-                .setView(view)
-                .setCancelable(true)
-                .show()
-                .apply {
-                    setCanceledOnTouchOutside(false)
-                }.to(view)
-        }
 
     fun openSettings(view: View) {
         val intent = Intent(this, SettingsActivity::class.java)
