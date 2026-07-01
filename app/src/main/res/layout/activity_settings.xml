@@ -6,62 +6,52 @@
     android:layout_height="match_parent"
     tools:context=".activities.SettingsActivity">
 
-    <EditText
-        android:id="@+id/menu_ET"
-        android:layout_width="@dimen/settings_menu_et_width"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/menu_recycler_view"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:inputType="textMultiLine"
-        android:textSize="@dimen/settings_text_size_large"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/button_container"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        tools:listitem="@layout/item_settings_menu" />
 
-    <Button
-        android:id="@+id/save_button"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/button_container"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:onClick="saveSettings"
-        android:padding="@dimen/settings_button_padding"
-        android:text="Save"
-        android:textSize="@dimen/button_text_size"
-        app:layout_constraintStart_toEndOf="@+id/menu_ET"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/reset_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:padding="@dimen/settings_button_padding"
-        android:text="Reset"
-        android:textSize="@dimen/button_text_size"
-        app:layout_constraintStart_toEndOf="@+id/menu_ET"
-        app:layout_constraintTop_toBottomOf="@+id/save_button" />
-
-    <TextView
-        android:id="@+id/textView22"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:text="Menu columns"
-        android:textSize="@dimen/default_text_size"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
 
-    <EditText
-        android:id="@+id/column_numbers_ET"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:ems="10"
-        android:inputType="numberSigned"
-        android:textSize="@dimen/default_text_size"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView22" />
+        <Button
+            android:id="@+id/add_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:text="Add Item"
+            android:textSize="@dimen/button_text_size" />
+
+        <Button
+            android:id="@+id/reset_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:text="Reset"
+            android:textSize="@dimen/button_text_size" />
+
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:onClick="saveSettings"
+            android:text="Save"
+            android:textSize="@dimen/button_text_size" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
