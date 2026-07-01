@@ -29,7 +29,6 @@ import edu.amrita.amritacafe.menu.getListOfMenu
 import edu.amrita.amritacafe.model.MenuAdapter
 import edu.amrita.amritacafe.model.Order
 import edu.amrita.amritacafe.model.OrderAdapter
-import edu.amrita.amritacafe.settings.Configuration
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.File
@@ -39,15 +38,12 @@ fun String.capitalizeWords(): String =
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var sheetsMenu: ArrayList<MenuItemUS>
     private var myToast: Toast? = null
     private var modeAmritapuri: Boolean = false
-    private lateinit var currentHistoryFile: File
     private var dialogOpen = false
 
     private lateinit var menuAdapter: MenuAdapter
     private lateinit var orderAdapter: OrderAdapter
-    private lateinit var configuration: Configuration
     private var currentOrderNumber = 0
     private var currentOrderSum = 0f
     var received = 0f
@@ -67,9 +63,6 @@ class MainActivity : AppCompatActivity() {
         modeAmritapuri = BuildConfig.FLAVOR == "amritapuri"
         println("Build flavor: ${BuildConfig.FLAVOR}, is amritapuri: $modeAmritapuri")
 
-        val pref = PreferenceManager.getDefaultSharedPreferences(this)
-        configuration = Configuration(pref)
-
         supportActionBar?.hide()
 
         orderAdapter = OrderAdapter(this)
@@ -81,7 +74,6 @@ class MainActivity : AppCompatActivity() {
         binding.orderListView.adapter = orderAdapter
 
         binding.orderButton.setOnClickListener {
-            val order = Order(currentOrderNumber, orderAdapter.orderItems.toList())
             openPaymentDialog()
         }
 
@@ -161,9 +153,6 @@ class MainActivity : AppCompatActivity() {
             println("PRESSED2")
             openEnterWeightDialog(menuItem)
         }
-//        menuAdapter = MenuAdapter(menu, applicationContext) {
-//            runOnUiThread { menuAdapter.notifyDataSetChanged() }
-//        }
         runOnUiThread { binding.menuRecyclerView.adapter = menuAdapter }
     }
 
@@ -248,7 +237,6 @@ class MainActivity : AppCompatActivity() {
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        println("dialog open: $dialogOpen")
         if (!dialogOpen) {
             finish()
         }
@@ -262,7 +250,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun startNewOrder() {
         GlobalScope.launch {
-            println("New order, printMode: $modeAmritapuri")
             currentOrderNumber++
 
             val order = Order(currentOrderNumber, orderAdapter.orderItems.toList())

@@ -1,22 +1,17 @@
 package edu.amrita.amritacafe.activities
 
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import edu.amrita.amritacafe.R
 import edu.amrita.amritacafe.databinding.ActivitySettingsBinding
 import edu.amrita.amritacafe.menu.*
-import edu.amrita.amritacafe.settings.Configuration
 import java.io.File
 
 class SettingsActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySettingsBinding
-    private lateinit var pref: SharedPreferences
-    private lateinit var configuration: Configuration
     private lateinit var BREAKFAST_FILE: File
     private lateinit var adapter: SettingsMenuAdapter
     private val menuList = mutableListOf<MenuItemUS>()
@@ -28,16 +23,19 @@ class SettingsActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-        pref = PreferenceManager.getDefaultSharedPreferences(this)
-        configuration = Configuration(pref)
-
         val dir = File(filesDir, "Menus")
         BREAKFAST_FILE = File(dir, "Breakfast.txt")
 
-        adapter = SettingsMenuAdapter(menuList) { position ->
-            menuList.removeAt(position)
-            adapter.notifyItemRemoved(position)
-        }
+        adapter = SettingsMenuAdapter(menuList, 
+            onChanged = {
+                saveMenuToFile(notifyAdapter = false)
+            },
+            onDelete = { position ->
+                menuList.removeAt(position)
+                adapter.notifyItemRemoved(position)
+                saveMenuToFile(notifyAdapter = false)
+            }
+        )
 
         binding.menuRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.menuRecyclerView.adapter = adapter
@@ -47,8 +45,20 @@ class SettingsActivity : AppCompatActivity() {
         binding.addButton.setOnClickListener {
             val newItem = MenuItemUS("", "", 0f, "VEGTABLES")
             menuList.add(newItem)
-            adapter.notifyItemInserted(menuList.size - 1)
-            binding.menuRecyclerView.scrollToPosition(menuList.size - 1)
+            
+            // Sort list as requested: "once item has been added it is arranged in alphabetic order"
+            val sorted = menuList.sortedBy { it.malaylamName }
+            menuList.clear()
+            menuList.addAll(sorted)
+            
+            adapter.notifyDataSetChanged()
+            saveMenuToFile(notifyAdapter = false)
+            
+            // Scroll to the new item if it's empty, or find its new position
+            val newPos = menuList.indexOf(newItem)
+            if (newPos != -1) {
+                binding.menuRecyclerView.scrollToPosition(newPos)
+            }
         }
 
         binding.resetButton.setOnClickListener {
@@ -63,43 +73,32 @@ class SettingsActivity : AppCompatActivity() {
             menuList.addAll(list.sortedBy { it.malaylamName })
             adapter.notifyDataSetChanged()
         } catch (e: Exception) {
-            Toast.makeText(this, "Failed to load menu: ${e.message}", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "${getString(R.string.settings_load_failed)}: ${e.message}", Toast.LENGTH_LONG).show()
         }
     }
 
-    fun saveSettings(view: View) {
+    private fun saveMenuToFile(notifyAdapter: Boolean) {
         try {
-            val sortedList = menuList.filter { it.malaylamName.isNotBlank() }
-                .sortedBy { it.malaylamName }
+            // Filter out fully blank items but keep those with at least a name or price being edited
+            val listToSave = menuList.filter { it.malaylamName.isNotBlank() }
+            createMenuFileFromMenuList(BREAKFAST_FILE, listToSave)
             
-            createMenuFileFromMenuList(BREAKFAST_FILE, sortedList)
-            
-            menuList.clear()
-            menuList.addAll(sortedList)
-            adapter.notifyDataSetChanged()
-
-            Toast.makeText(
-                applicationContext,
-                "Menu saved successfully",
-                Toast.LENGTH_SHORT
-            ).show()
+            if (notifyAdapter) {
+                adapter.notifyDataSetChanged()
+            }
         } catch (e: Exception) {
-            Toast.makeText(
-                applicationContext,
-                "Failed to save: ${e.message}",
-                Toast.LENGTH_LONG
-            ).show()
+            // Log or show error if critical, but for auto-save we avoid frequent toasts
         }
     }
 
     private fun showResetConfirmationDialog() {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Confirm Reset")
-        builder.setMessage("Are you sure you want to reset the menu to the default?")
-        builder.setPositiveButton("Reset") { _, _ ->
+        builder.setTitle(getString(R.string.settings_confirm_reset_title))
+        builder.setMessage(getString(R.string.settings_confirm_reset_message))
+        builder.setPositiveButton(getString(R.string.settings_reset)) { _, _ ->
             resetMenu()
         }
-        builder.setNegativeButton("Cancel") { dialog, _ ->
+        builder.setNegativeButton(android.R.string.cancel) { dialog, _ ->
             dialog.dismiss()
         }
         builder.show()
@@ -110,7 +109,7 @@ class SettingsActivity : AppCompatActivity() {
         loadCurrentMenu()
         Toast.makeText(
             applicationContext,
-            "Menu reset to default",
+            getString(R.string.settings_reset_success),
             Toast.LENGTH_SHORT
         ).show()
     }

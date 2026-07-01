@@ -10,6 +10,7 @@ import edu.amrita.amritacafe.menu.MenuItemUS
 
 class SettingsMenuAdapter(
     private var menuItems: MutableList<MenuItemUS>,
+    private val onChanged: () -> Unit,
     private val onDelete: (Int) -> Unit
 ) : RecyclerView.Adapter<SettingsMenuAdapter.ViewHolder>() {
 
@@ -19,7 +20,7 @@ class SettingsMenuAdapter(
         private var currentWatcher: TextWatcher? = null
         private var priceWatcher: TextWatcher? = null
 
-        fun bind(item: MenuItemUS, position: Int) {
+        fun bind(item: MenuItemUS) {
             binding.nameET.removeTextChangedListener(currentWatcher)
             binding.priceET.removeTextChangedListener(priceWatcher)
 
@@ -30,11 +31,18 @@ class SettingsMenuAdapter(
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
                 override fun afterTextChanged(s: Editable?) {
-                    val updatedItem = menuItems[adapterPosition].copy(
-                        malaylamName = s.toString(),
-                        englishName = s.toString().uppercase()
-                    )
-                    menuItems[adapterPosition] = updatedItem
+                    val pos = adapterPosition
+                    if (pos != RecyclerView.NO_POSITION) {
+                        val newText = s.toString()
+                        if (menuItems[pos].malaylamName != newText) {
+                            val updatedItem = menuItems[pos].copy(
+                                malaylamName = newText,
+                                englishName = newText.uppercase()
+                            )
+                            menuItems[pos] = updatedItem
+                            onChanged()
+                        }
+                    }
                 }
             }
 
@@ -42,9 +50,15 @@ class SettingsMenuAdapter(
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
                 override fun afterTextChanged(s: Editable?) {
-                    val price = s.toString().toFloatOrNull() ?: 0f
-                    val updatedItem = menuItems[adapterPosition].copy(price = price)
-                    menuItems[adapterPosition] = updatedItem
+                    val pos = adapterPosition
+                    if (pos != RecyclerView.NO_POSITION) {
+                        val price = s.toString().toFloatOrNull() ?: 0f
+                        if (menuItems[pos].price != price) {
+                            val updatedItem = menuItems[pos].copy(price = price)
+                            menuItems[pos] = updatedItem
+                            onChanged()
+                        }
+                    }
                 }
             }
 
@@ -52,7 +66,10 @@ class SettingsMenuAdapter(
             binding.priceET.addTextChangedListener(priceWatcher)
 
             binding.deleteButton.setOnClickListener {
-                onDelete(adapterPosition)
+                val pos = adapterPosition
+                if (pos != RecyclerView.NO_POSITION) {
+                    onDelete(pos)
+                }
             }
         }
     }
@@ -67,14 +84,8 @@ class SettingsMenuAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(menuItems[position], position)
+        holder.bind(menuItems[position])
     }
 
     override fun getItemCount() = menuItems.size
-
-    fun updateList(newList: List<MenuItemUS>) {
-        menuItems.clear()
-        menuItems.addAll(newList)
-        notifyDataSetChanged()
-    }
 }

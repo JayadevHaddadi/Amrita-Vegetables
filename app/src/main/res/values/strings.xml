@@ -2,4 +2,18 @@
     <string name="app_name">Amrita Vegetables</string>
     <string name="order_string">Order</string>
     <string name="amritapuri_at">Amritapuri @</string>
+
+    <!-- Settings Activity -->
+    <string name="settings_add_item">Add Item</string>
+    <string name="settings_reset">Reset</string>
+    <string name="settings_save">Save</string>
+    <string name="settings_name_hint">Name</string>
+    <string name="settings_cost_hint">Cost</string>
+    <string name="settings_confirm_reset_title">Confirm Reset</string>
+    <string name="settings_confirm_reset_message">Are you sure you want to reset the menu to the default?</string>
+    <string name="settings_reset_success">Menu reset to default</string>
+    <string name="settings_save_success">Menu saved successfully</string>
+    <string name="settings_load_failed">Failed to load menu</string>
+    <string name="settings_save_failed">Failed to save</string>
+    <string name="settings_delete_description">Delete item</string>
 </resources>
